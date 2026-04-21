@@ -107,7 +107,7 @@ c	include 'histograms.inc'
 	  j=index(filename,'/')
 	  if(i.eq.0) then		!add .inp if not included in filename
 	    i=index(filename,' ')
-	    i f(i+2.le.len(filename)) write(filename(i:),'(''.inp'')')
+	    if(i+2.le.len(filename)) write(filename(i:),'(''.inp'')')
 	  endif
 	  write(6,'(a10,a69)')'filename=',filename
 	  ierr = thload(filename)
@@ -988,7 +988,8 @@ c	      stop
 	ierr = regparmdouble('transparency',transparency,0.0)
 	ierr = regparmint('use_benhar_sf',use_benhar_sf_int,0)
 	ierr = regparmstring('extra_dbase_file',extra_dbase_file,0)
-	ierr = regparmstring('random_state_file',random_state_file,0)
+	ierr = regparmstring('dis_datfile',dis_datfile,0)
+        ierr = regparmstring('random_state_file',random_state_file,0)
 	ierr = regparmint('random_seed',random_seed,0)
 
 *	EXPERIMENT
@@ -1005,7 +1006,8 @@ c	      stop
 	ierr = regparmint('doing_hplus', doing_hplus_int,1)
 	ierr = regparmint('doing_pizero', doing_pizero_int,0)
 	ierr = regparmint('pizero_ngamma', pizero_ngamma,0)
-	ierr = regparmint('doing_rho',doing_rho_int,0)
+        ierr = regparmint('doing_rho',doing_rho_int,0)
+ 	ierr = regparmint('doing_dis',doing_dis_int,0)
 	ierr = regparmint('doing_decay',doing_decay_int,0)
 	ierr = regparmdouble('ctau',ctau,0.0)
 
@@ -1144,6 +1146,7 @@ ccc
         if(doing_hplus_int.gt.0) doing_hplus=.true.
 	if(doing_pizero_int.gt.0) doing_pizero=.true.
         if(doing_rho_int.gt.0) doing_rho=.true.
+        if(doing_dis_int.gt.0) doing_dis=.true.
         if(doing_decay_int.gt.0) doing_decay=.true.
         if(do_fermi_int.gt.0) do_fermi=.true.
 	do i=1,6

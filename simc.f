@@ -61,6 +61,7 @@ c	call hlimit(PawSize)
 ! ... read in the data base
 
 	call dbase_read(H)
+	if (doing_dis) write(6,*) 'DIS mode enabled. dis_datfile = ', trim(dis_datfile)
 
 	if (debug(3)) write(6,*) 'Main after dbrd: p,e th',
      >	    spec%p%theta,spec%e%theta,using_P_arm_montecarlo,using_E_arm_montecarlo
@@ -202,7 +203,12 @@ cdg	call time (timestring1(11:23))
 	  endif
 
 ! ... generate an event
-	  call generate(main,vertex,orig,success)
+	  if (doing_dis) then
+  		call generate_dis(main,vertex,orig,success)
+	  else
+  		call generate(main,vertex,orig,success)
+	  endif
+
 	  if(debug(2)) write(6,*)'sim: after gen, success =',success
 
 ! Run the event through various manipulations, checking to see whether

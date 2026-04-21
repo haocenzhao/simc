@@ -1,0 +1,124 @@
+;=============================================================
+; DIS test input for SimC
+; SHMS detects the electron
+; HMS is used as placeholder for the hadron arm
+; Only the electron-arm Monte Carlo runs (spect_mode = -2)
+;=============================================================
+
+begin parm experiment
+  ngen = 1083
+  EXPER%charge = 1.0
+
+  doing_phsp = 0
+  doing_kaon = 0
+  doing_pion = 0
+  doing_delta = 0
+  doing_rho  = 0
+  doing_semi = 0
+  doing_dis  = 1
+
+  doing_decay = 0
+  ctau = 0.0
+
+  dis_datfile = /w/hallc-scshelf2102/c-lad/haocen/simc/simc_dis_gen/dis/test_band_tagged_full_PRC_E10.2GeV_recp.dat
+end parm experiment
+
+begin parm kinematics_main
+  Ebeam = 10200.0               ; Beam energy (MeV)
+  dEbeam = 0.05                ; Beam energy variation (%)
+  electron_arm = 5             ; SHMS
+  hadron_arm   = 1             ; HMS placeholder
+  spec%e%P = 7000.0            ; Electron-arm central momentum (MeV/c)
+  spec%e%theta = 0.0         ; Electron-arm central angle (deg)
+  spec%p%P = 5122.0            ; Hadron-arm central momentum (placeholder)
+  spec%p%theta = 22.73         ; Hadron-arm central angle (placeholder)
+end parm kinematics_main
+
+begin parm target
+  targ%A = 1.0
+  targ%Z = 1.0
+  targ%mass_amu = 1.007276
+  targ%mrec_amu = 0.0
+  targ%rho = 0.0723
+  targ%thick = 286.89
+  targ%angle = 0.0
+  targ%abundancy = 0.0
+  targ%can = 2
+end parm target
+
+begin parm debug
+  debug(1) = 0
+  debug(2) = 0
+  debug(3) = 0
+  debug(4) = 0
+  debug(5) = 0
+end parm debug
+
+begin parm e_arm_accept
+  SPedge%e%delta%min = -100.0   ; Electron-arm delta min (%)
+  SPedge%e%delta%max =  100.0   ; Electron-arm delta max (%)
+  SPedge%e%yptar%min = -100.0   ; Electron-arm yptar min (mrad)
+  SPedge%e%yptar%max =  100.0   ; Electron-arm yptar max (mrad)
+  SPedge%e%xptar%min = -100.0  ; Electron-arm xptar min (mrad)
+  SPedge%e%xptar%max =  100.0  ; Electron-arm xptar max (mrad)
+end parm e_arm_accept
+
+begin parm p_arm_accept
+  SPedge%p%delta%min = -50.0
+  SPedge%p%delta%max =  50.0
+  SPedge%p%yptar%min = -100.0
+  SPedge%p%yptar%max =  100.0
+  SPedge%p%xptar%min = -100.0
+  SPedge%p%xptar%max =  100.0
+end parm p_arm_accept
+
+begin parm beamandtargetinfo
+  gen%xwid = 0.008868
+  gen%ywid = 0.004235
+  targ%fr_pattern = 1.0
+  targ%fr1 = 0.1
+  targ%fr2 = 0.1
+  targ%xoffset = 0.200
+  targ%yoffset = 0.0
+  targ%zoffset = 0.315
+end parm beamandtargetinfo
+
+begin parm spect_offset
+  spec%e%offset%x = 0.0
+  spec%e%offset%y = 0.0
+  spec%e%offset%z = 0.0
+  spec%e%offset%xptar = 0.0
+  spec%e%offset%yptar = 0.0
+
+  spec%p%offset%x = 0.0
+  spec%p%offset%y = 0.0
+  spec%p%offset%z = 0.0
+  spec%p%offset%xptar = 0.0
+  spec%p%offset%yptar = 0.0
+end parm spect_offset
+
+begin parm simulate
+  hard_cuts = 0
+  using_rad = 0
+  use_expon = 0
+  one_tail = 0
+  intcor_mode = 1
+  spect_mode = -2              ; Only E-arm Monte Carlo runs
+  cuts%Em%min = 0.0
+  cuts%Em%max = 0.0
+  using_Eloss = 1
+  correct_Eloss = 1
+  correct_raster = 1
+  mc_smear = 1
+  deForest_flag = 0
+  rad_flag = 0
+  extrad_flag = 2
+  lambda(1) = 0.0
+  lambda(2) = 0.0
+  lambda(3) = 0.0
+  Nntu = 1
+  using_Coulomb = 1
+  dE_edge_test = 0.0
+  use_offshell_rad = 0
+  Egamma_gen_max = 0.0
+end parm simulate
