@@ -1,0 +1,97 @@
+; DIS template:
+; 1) HMS as electron arm
+; 2) SHMS as hadron arm placeholder
+; 3) only the electron-arm Monte Carlo runs (spect_mode = -2)
+; 4) no real target physics: use a dummy target only because SIMC requires it
+; 5) use doing_phsp = 1 so SIMC does not apply the built-in elastic/eep cross section
+
+begin parm experiment
+  ngen = 200000       ; +N: require N accepted events; -N: process exactly N input events
+  EXPER%charge = 1.0
+
+  doing_phsp = 1
+  doing_kaon = 0
+  doing_pion = 0
+  doing_delta = 0
+  doing_rho  = 0
+  doing_semi = 0
+  doing_dis  = 1
+
+  doing_decay = 0
+
+  dis_datfile = dis/test_band_tagged_full_PRC_E10.2GeV_recp.dat
+end parm experiment
+
+begin parm kinematics_main
+  ; Beam and central spectrometer settings
+  Ebeam = 10200.0            ; Beam energy [MeV]
+  dEbeam = 0.0               ; Beam energy spread [%]
+
+  electron_arm = 1           ; 1 = HMS
+  hadron_arm   = 5           ; 5 = SHMS
+
+  ; HMS is fixed on the right side by electron_arm = 1
+  ; SHMS is fixed on the left side by hadron_arm = 5
+  ; so SIMC effectively interprets this as HMS/SHMS at -/+ 30 deg
+  spec%e%P = 7000.0          ; HMS central momentum [MeV/c]
+  spec%e%theta = 0.0        ; HMS central angle [deg]
+
+  spec%p%P = 7000.0          ; SHMS central momentum [MeV/c]
+  spec%p%theta = 30.0        ; SHMS central angle [deg]
+end parm kinematics_main
+
+begin parm target
+  ; Dummy target block required by SIMC.
+  ; Target effects are disabled in the simulate block.
+  targ%A = 1.0
+  targ%Z = 1.0
+  targ%mass_amu = 1.007276
+  targ%mrec_amu = 0.0
+  targ%rho = 0.001
+  targ%thick = 10.0
+  targ%angle = 0.0
+  targ%abundancy = 100.0
+  targ%can = 2
+end parm target
+
+begin parm beamandtargetinfo
+  ; Vertex offset settings
+  targ%zoffset = 0.0         ; Vertex z offset [cm]
+end parm beamandtargetinfo
+
+begin parm e_arm_accept
+  ; HMS acceptance
+  SPedge%e%delta%min = -100.0 ; Delta min [%]
+  SPedge%e%delta%max =  100.0 ; Delta max [%]
+  SPedge%e%yptar%min = -1000.0 ; Yptar min [mrad]
+  SPedge%e%yptar%max =  1000.0 ; Yptar max [mrad]
+  SPedge%e%xptar%min = -1000.0 ; Xptar min [mrad]
+  SPedge%e%xptar%max =  1000.0 ; Xptar max [mrad]
+end parm e_arm_accept
+
+begin parm p_arm_accept
+  ; Placeholder SHMS acceptance block.
+  ; Keep wide enough to avoid artificial rejections.
+  SPedge%p%delta%min = -100.0
+  SPedge%p%delta%max =  100.0
+  SPedge%p%yptar%min = -100.0
+  SPedge%p%yptar%max =  100.0
+  SPedge%p%xptar%min = -100.0
+  SPedge%p%xptar%max =  100.0
+end parm p_arm_accept
+
+begin parm simulate
+  ; Simulation control
+  spect_mode = -2            ; Run only the electron-arm MC
+  Nntu = 1                   ; Write binary output for run_simc_tree
+
+  hard_cuts = 0              ; Disable hard acceptance cuts
+  using_rad = 0              ; Disable internal radiative effects
+  using_Eloss = 0            ; Disable target energy loss
+  correct_Eloss = 0          ; Disable energy-loss correction
+  correct_raster = 0         ; Disable raster correction
+  using_Coulomb = 0          ; Disable Coulomb correction
+  mc_smear = 0               ; Disable smearing
+
+  dE_edge_test = 0.0         ; Energy-edge margin [MeV]
+end parm simulate
