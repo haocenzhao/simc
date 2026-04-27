@@ -5,7 +5,7 @@
 ; Use spect_mode = -2 so only E-arm Monte Carlo runs
 
 begin parm experiment
-  ngen = 1083
+  ngen = -200000
   EXPER%charge = 1.0
 
   doing_phsp = 0
@@ -23,7 +23,7 @@ begin parm experiment
 end parm experiment
 
 begin parm kinematics_main
-  Ebeam = 11000.0
+  Ebeam = 10200.0
   dEbeam = 0.05
 
   electron_arm = 5

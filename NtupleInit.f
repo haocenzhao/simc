@@ -340,6 +340,11 @@ c	endif
 !	 NtupleTag(m)='w'
 !	endif
 
+	if (doing_dis) then
+	  m = m+1
+	  NtupleTag(m) = 'event_id'
+	endif
+
 	NtupleSize = m
 
 c	call HBOOKN(id,title,NtupleSize,name,bank,NtupleTag) !create Ntuple

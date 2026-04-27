@@ -260,6 +260,8 @@ c	  ntu(11) = vertex%p%xptar			!mr
 	  
 	endif
 
+	if (doing_dis) ntu(NtupleSize) = ntup%dis_event_id
+
 c	call HFN(NtupleID,ntu)
 	do i=1,NtupleSize
 	   write(NtupleIO) ntu(i)

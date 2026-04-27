@@ -182,6 +182,7 @@ cdg	call time (timestring1(11:23))
 	  ntup%mm = 0.0
 	  ntup%mmA = 0.0
 	  ntup%t = 0.0
+	  ntup%dis_event_id = 0.d0
 
 ! Setup for this event
 

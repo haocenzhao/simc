@@ -171,6 +171,7 @@ C Structure for variables that we want to available to the ntuple.
 		real*8 rhomass, rhotheta
 		real*8 gamma1(4),gamma2(4)
 		real*8 xcal_gamma1,ycal_gamma1,xcal_gamma2,ycal_gamma2
+		real*8 dis_event_id
 	end type
 
 	type (ntupvars):: ntup
