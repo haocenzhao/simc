@@ -1,6 +1,6 @@
 ; DIS template:
-; 1) HMS as electron arm
-; 2) SHMS as hadron arm placeholder
+; 1) SHMS as electron arm
+; 2) HMS as hadron arm placeholder
 ; 3) only the electron-arm Monte Carlo runs (spect_mode = -2)
 ; 4) no real target physics: use a dummy target only because SIMC requires it
 ; 5) use doing_phsp = 1 so SIMC does not apply the built-in elastic/eep cross section
@@ -28,17 +28,14 @@ begin parm kinematics_main
   Ebeam = 10200.0            ; Beam energy [MeV]
   dEbeam = 0.0               ; Beam energy spread [%]
 
-  electron_arm = 1           ; 1 = HMS
-  hadron_arm   = 5           ; 5 = SHMS
+  electron_arm = 5           ; 5 = SHMS
+  hadron_arm   = 1           ; 1 = HMS
 
-  ; HMS is fixed on the right side by electron_arm = 1
-  ; SHMS is fixed on the left side by hadron_arm = 5
-  ; so SIMC effectively interprets this as HMS/SHMS at -/+ 30 deg
-  spec%e%P = 4400.0          ; HMS central momentum [MeV/c]
-  spec%e%theta = 13.5        ; HMS central angle [deg]
+  spec%e%P = 4400.0          ; SHMS central momentum [MeV/c]
+  spec%e%theta = 17        ; SHMS central angle [deg]
 
-  spec%p%P = 4400.0          ; SHMS central momentum [MeV/c]
-  spec%p%theta = 17.0        ; SHMS central angle [deg]
+  spec%p%P = 4400.0          ; HMS central momentum [MeV/c]
+  spec%p%theta = 13.5        ; HMS central angle [deg]
 end parm kinematics_main
 
 begin parm target
@@ -61,24 +58,22 @@ begin parm beamandtargetinfo
 end parm beamandtargetinfo
 
 begin parm e_arm_accept
-  ; HMS acceptance
+  ; SHMS acceptance
   SPedge%e%delta%min = -10.0 ; Delta min [%]
-  SPedge%e%delta%max =  10.0 ; Delta max [%]
-  SPedge%e%yptar%min = -85.0 ; Yptar min [mrad]  y'tar -> horizontal angle
-  SPedge%e%yptar%max =  85.0 ; Yptar max [mrad]
-  SPedge%e%xptar%min = -32.0 ; Xptar min [mrad]  x'tar -> vertical angle
-  SPedge%e%xptar%max =  32.0 ; Xptar max [mrad]
+  SPedge%e%delta%max =  22.0 ; Delta max [%]
+  SPedge%e%yptar%min = -18.0 ; Yptar min [mrad]  y'tar -> horizontal angle
+  SPedge%e%yptar%max =  18.0 ; Yptar max [mrad]
+  SPedge%e%xptar%min = -45.0 ; Xptar min [mrad]  x'tar -> vertical angle
+  SPedge%e%xptar%max =  45.0 ; Xptar max [mrad]
 end parm e_arm_accept
 
 begin parm p_arm_accept
-  ; Placeholder SHMS acceptance block.
-  ; Keep wide enough to avoid artificial rejections.
   SPedge%p%delta%min = -10.0
-  SPedge%p%delta%max =  22.0
-  SPedge%p%yptar%min = -18.0  ; y'tar -> horizontal angle 
-  SPedge%p%yptar%max =  18.0  
-  SPedge%p%xptar%min = -45.0  ; x'tar -> vertical angle
-  SPedge%p%xptar%max =  45.0
+  SPedge%p%delta%max =  10.0
+  SPedge%p%yptar%min = -85.0  ; y'tar -> horizontal angle 
+  SPedge%p%yptar%max =  85.0  
+  SPedge%p%xptar%min = -32.0  ; x'tar -> vertical angle
+  SPedge%p%xptar%max =  32.0
 end parm p_arm_accept
 
 begin parm simulate
